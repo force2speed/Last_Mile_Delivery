@@ -236,8 +236,8 @@ export class NotificationService {
     });
 
     if (!response.ok) {
-      const err = await response.json();
-      throw new Error(`Twilio error ${err.code}: ${err.message}`);
+      const err = await response.json() as any;
+      throw new Error(`Twilio error ${err?.code}: ${err?.message}`);
     }
     return true;
   }

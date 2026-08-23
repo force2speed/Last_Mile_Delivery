@@ -14,7 +14,7 @@ import { OrderController } from "../controllers/order.controller";
 const router = Router();
 const prisma = new PrismaClient();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-07-29.dahlia" as any });
 
 // =============================================================================
 // ── AUTH ROUTES (/api/auth) ───────────────────────────────────────────────────
@@ -43,7 +43,7 @@ router.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+    if (!user || !user.passwordHash || !(await bcrypt.compare(password, user.passwordHash))) {
       return res.status(401).json({ error: "Invalid email or password." });
     }
     if (!user.isActive) {
@@ -137,7 +137,7 @@ router.patch("/auth/me", authenticate, async (req, res) => {
       const user = await prisma.user.findUnique({ where: { id: req.user!.userId } });
       if (!user) return res.status(404).json({ error: "User not found." });
       
-      const isValid = await bcrypt.compare(currentPassword, user.passwordHash);
+      const isValid = user.passwordHash ? await bcrypt.compare(currentPassword, user.passwordHash) : false;
       if (!isValid) return res.status(401).json({ error: "Incorrect current password." });
     }
 
