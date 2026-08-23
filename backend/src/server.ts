@@ -1,5 +1,5 @@
-// =============================================================================
-// src/server.ts � Express application entry point
+﻿// =============================================================================
+// src/server.ts — Express application entry point
 // =============================================================================
 import "dotenv/config";
 import express from "express";
@@ -40,6 +40,14 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 app.listen(PORT, () => {
   console.log(`?  LastMile API running on http://localhost:${PORT}`);
   console.log(`??  Health check: http://localhost:${PORT}/health`);
+  const RENDER_EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL;
+  if (RENDER_EXTERNAL_URL) {
+    setInterval(() => {
+      fetch(RENDER_EXTERNAL_URL + '/health').catch(() => {});
+    }, 14 * 60 * 1000);
+  }
 });
 
+
 export default app;
+
