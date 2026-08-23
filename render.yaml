@@ -2,6 +2,7 @@ services:
   - type: web
     name: lastmile-backend
     env: node
+    plan: free
     rootDir: backend
     buildCommand: npm install && npm run build && npx prisma db push
     startCommand: npm start
