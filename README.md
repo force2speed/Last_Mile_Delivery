@@ -1,6 +1,9 @@
-﻿# LastMile Delivery Tracker
+# LastMile Delivery Tracker
 
 > A production-grade, full-stack **Last-Mile Delivery Management Platform** with dynamic rate cards, zone-based agent assignment, real-time order tracking, and role-based access control.
+
+**🔴 Live Demo:** [https://last-mile-delivery-mu.vercel.app](https://last-mile-delivery-mu.vercel.app)
+**⚙️ Live API:** [https://lastmile-backend-mu30.onrender.com/health](https://lastmile-backend-mu30.onrender.com/health)
 
 ---
 
